@@ -1,10 +1,11 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const app=express();
-
-app.get("/", function(req,res){
+const router =express.Router();
+router.get("/", function(req,res){
     res.send("Welcome to nodejs demo app");
 });
 
-app.listen(3005,()=>{
-    console.log("Running on port 3005");
-});
+app.use('/.netlify/functions/api',router);
+
+module.exports.handler=serverless(app);
